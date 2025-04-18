@@ -1,2 +1,124 @@
-# Ubuntu-
-Ubuntu 系统的常见操作与快捷键使用
+### Ubuntu 实用操作速查手册
+
+#### 一、系统启动与界面切换
+- **进入命令行界面**：`Ctrl + Alt + F1`
+- **返回图形化界面**：`Ctrl + Alt + F7`
+
+#### 二、终端常用快捷键
+| 操作          | 快捷键                |
+|---------------|-----------------------|
+| 打开终端      | `Ctrl + Alt + T`      |
+| 新建终端      | `Ctrl + Shift + N`    |
+| 关闭终端      | `Ctrl + D`            |
+| 复制          | `Ctrl + Shift + C`    |
+| 粘贴          | `Ctrl + Shift + V`    |
+| 切换标签页    | `Ctrl + Shift + ↑/↓`  |
+| 新建标签页    | `Ctrl + Shift + T`    |
+| 放大终端      | `Ctrl + Shift + =`    |
+| 缩小终端      | `Ctrl + -`            |
+| 清除屏幕      | `Ctrl + L`            |
+| 终止任务      | `Ctrl + C`            |
+| 光标到行首    | `Ctrl + A`            |
+| 光标到行尾    | `Ctrl + E`            |
+| 命令补全      | `Tab`                 |
+
+#### 三、nano编辑器高效操作
+- **标记文本**：`Alt + A`
+- **删除标记文本**：`Ctrl + K`
+- **粘贴删除内容**：`Ctrl + U`
+
+#### 四、系统信息查询
+| 信息类型        | 命令                          |
+|-----------------|-----------------------------|
+| 内核版本        | `uname -a`                   |
+| 系统位数        | `getconf LONG_BIT`            |
+| 系统版本        | `lsb_release -a`              |
+| Ubuntu版本      | `cat /etc/lsb-release`        |
+| 系统版本名称    | `cat /etc/os-release`         |
+| CPU信息         | `cat /proc/cpuinfo`           |
+| 内存信息        | `cat /proc/meminfo`           |
+| 磁盘空间        | `df -h`                       |
+
+#### 五、权限管理命令
+- **完整root环境**：`sudo -i` 
+- **简化root环境**：`sudo su`
+- **保留用户环境**：`sudo -s`
+
+#### 六、基础文件操作
+| 操作          | 命令                          |
+|---------------|-----------------------------|
+| 重启系统      | `sudo reboot`                 |
+| 查看所有文件  | `ls -a`                       |
+| 当前路径      | `pwd`                         |
+| 切换目录      | `cd /目标路径`                |
+| 返回上级目录  | `cd..`                       |
+| 返回主目录    | `cd ~`                        |
+| 创建文件夹    | `mkdir 目录名`                 |
+| 删除文件夹    | `rm -r 目录名`                |
+
+#### 七、软件管理核心命令
+**推荐使用 `apt` 替代 `apt-get`**
+| 操作          | 命令                          |
+|---------------|-----------------------------|
+| 系统升级      | `sudo apt dist-upgrade`       |
+| 更新包列表    | `sudo apt update`             |
+| 升级软件包    | `sudo apt upgrade`            |
+| 安装软件      | `sudo apt install 软件名`      |
+| 更新软件      | `sudo apt upgrade 软件名`     |
+| 卸载软件      | `sudo apt remove 软件名`      |
+| 卸载配置文件  | `sudo apt purge 软件名`       |
+| 清理缓存      | `sudo apt clean`              |
+| 查看软件列表  | `sudo dpkg -l`                |
+
+#### 八、常用软件安装
+- **VMware工具**：`sudo apt install open-vm-tools open-vm-tools-desktop`
+- **Git**：`sudo apt install git`
+- **Vim编辑器**：`sudo apt install vim`
+- **多媒体解码器**：`sudo apt install ubuntu-restricted-extras`
+- **默认桌面**：`sudo apt install --reinstall ubuntu-desktop`
+- **系统设置**：`sudo apt install systemsettings`
+- **应用商店**：`sudo apt install ubuntu-software`
+
+#### 九、系统常见问题处理
+1. **TTF字体乱码**：`export LANG=en_US.UTF-8`
+2. **系统汉化（方法1）**
+   ```bash
+   sudo apt install language-pack-zh-hans language-pack-gnome-zh-hans
+   sudo update-locale LANG=zh_CN.UTF-8 LC_TIME=zh_CN.UTF-8 LC_MONETARY=zh_CN.UTF-8
+   sudo timedatectl set-timezone Asia/Shanghai
+   sudo apt install fcitx fcitx-pinyin fcitx-config-gtk
+   im-config -n fcitx
+   echo 'export GTK_IM_MODULE=fcitx
+   export QT_IM_MODULE=fcitx
+   export XMODIFIERS=@im=fcitx' >> ~/.profile
+   ```
+3. **系统汉化（方法2）**
+   ```bash
+   echo $LANG                # 查看当前语言
+   locale -a                 # 查看已安装语言
+   sudo cp /etc/default/locale /etc/default/locale.bak  # 备份
+   sudo apt install language-pack-zh-hans
+   sudo apt install ttf-wqy-zenhei fonts-wqy-microhei
+   sudo update-locale LANG=zh_CN.UTF-8
+   sudo locale-gen zh_CN.UTF-8
+   sudo nano /etc/default/locale  # 添加/修改 LANG="zh_CN.UTF-8" LANGUAGE="zh_CN:zh"
+   source /etc/default/locale     # 更新生效
+   ```
+
+#### 十、快捷方式创建
+```bash
+cd ~/桌面
+nano 软件名.desktop  # 编辑文件内容
+# 按以下模板填写内容
+[Desktop Entry]
+Encoding=UTF-8
+Version=<软件版本>
+Name=<软件名>
+Comment=<描述>
+Exec=<程序绝对路径>
+Icon=<图标绝对路径>
+Terminal=false  # 窗口程序填false，命令行填true
+Type=Application
+# 保存退出：Ctrl + O → Enter → Ctrl + X
+sudo chmod +x ~/桌面/软件名.desktop  # 赋予执行权限
+``` 
